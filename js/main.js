@@ -3,26 +3,50 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabs = () => {
    
     const cardDetailChangeElems = document.querySelectorAll('.card-detail__change');
-    const cardDetailsTitle      = document.querySelectorAll('.card-details__title');
-    const cardImage = document.querySelectorAll('.card__image');
+    const cardDetailsTitleElem  = document.querySelector('.card-details__title');
+    const cardDetailsImageElem  = document.querySelector('.card__image_item');
+    const cardDetailsPriceElem  = document.querySelector('.card-details__price');
+    const descriptionMemory     = document.querySelector('.description__memory');
 
-    const hideAll = () => {
-      for (let i = 0; i < cardDetailChangeElems.length; i++) {
-        cardDetailChangeElems[i].classList.remove('active');
-        cardDetailsTitle[i].classList.remove('active');
-        cardImage[i].classList.remove('active');
-      }
+    const dataPhones = [
+      {
+        name: 'Смартфон Apple iPhone 12 Pro 64GB Graphite',
+        img: 'img/iPhone-graphite.png',
+        price: '95990',
+        memoryRom: '64',
+      },
+      {
+        name: 'Смартфон Apple iPhone 12 Pro 128GB Silver',
+        img: 'img/iPhone-silver.png',
+        price: '97990',
+        memoryRom: '128',
+      },
+      {
+        name: 'Смартфон Apple iPhone 12 Pro 256GB Pacific Blue',
+        img: 'img/iPhone-blue.png',
+        price: '99990',
+        memoryRom: '256',
+      },
+    ];
+
+    const deactive = () => {
+      cardDetailChangeElems.forEach(btn => btn.classList.remove('active'))
     }
 
-    for (let i = 0; i < cardDetailChangeElems.length; i++) {
-      cardDetailChangeElems[i].addEventListener('click', () => {
-        hideAll();
-        cardDetailChangeElems[i].classList.add('active');
-        cardDetailsTitle[i].classList.add('active');
-        cardImage[i].classList.add('active');
-      })
-
-    }
+    cardDetailChangeElems.forEach( (btn, i) => {
+      btn.addEventListener('click', () => {
+        if (!btn.classList.contains('active')) {
+          deactive();
+          
+          btn.classList.add('active');
+          cardDetailsTitleElem.textContent = dataPhones[i].name;
+          cardDetailsImageElem.src = dataPhones[i].img;
+          cardDetailsPriceElem.textContent = dataPhones[i].price+'₽';
+          descriptionMemory.textContent = `Встроенная память (ROM) ${dataPhones[i].memoryRom} ГБ`
+        }
+      } )
+    } )
+    
 
   }
   tabs();
