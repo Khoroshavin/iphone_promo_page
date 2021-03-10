@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  'use strict';
+  
   const tabs = () => {
    
     const cardDetailChangeElems = document.querySelectorAll('.card-detail__change');
@@ -95,6 +95,27 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
 
+  const modal = () => {
+
+    const cardDetailsButtonBuy = document.querySelector('.card-details__button_buy');
+    const modal = document.querySelector('.modal');
+
+    cardDetailsButtonBuy.addEventListener('click', () => {
+      modal.classList.add('open');
+    })
+
+    modal.addEventListener('click', (event) => {
+      const target = event.target;
+      if (target.classList.contains('modal__close')){
+        modal.classList.remove('open');
+      }
+    })
+
+  }
+
+
+
   tabs();
   accordeon();
+  modal();
 });
