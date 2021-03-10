@@ -49,6 +49,22 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
   }
-  tabs();
+  
 
+  const accordeon = () => {
+    
+    const characteristicsTitle = document.querySelectorAll('.characteristics__title');
+    const characteristicsDesc  = document.querySelectorAll('.characteristics__description');
+
+    characteristicsTitle.forEach((elem, i) =>{
+      elem.addEventListener('click', () => {
+        elem.classList.toggle('active');
+        characteristicsDesc[i].classList.toggle('active');
+    });
+  });
+  };
+
+
+  tabs();
+  accordeon();
 });
