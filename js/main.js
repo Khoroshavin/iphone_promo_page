@@ -95,23 +95,42 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
 
-  const modal = () => {
+  modal = () => {
+    const cardDetailsButtonBuy = document.querySelector('.card-details__button_buy'),
+    cardDetailsButtonDelivery = document.querySelector('.card-details__button_delivery'),
+    modal = document.querySelector('.modal'),
+    modalSubtitle = document.querySelector('.modal__subtitle');
 
-    const cardDetailsButtonBuy = document.querySelector('.card-details__button_buy');
-    const modal = document.querySelector('.modal');
+
+    // console.log(cardDetailsTitle);
+
+    const openModal = text => {
+        let cardDetailsTitle = document.querySelector('.card-details__title').textContent;
+        let modalTitle = document.querySelector('.modal__title');
+        modalSubtitle.textContent = text;
+        modalTitle.textContent = cardDetailsTitle;
+        modal.classList.add('open');
+    },
+    closeModal = e => {
+        const target = e.target;
+
+        if (target === modal || target.classList.contains('modal__close') || e.code === 'Escape') {
+            modal.classList.remove('open');
+        }
+    }
 
     cardDetailsButtonBuy.addEventListener('click', () => {
-      modal.classList.add('open');
-    })
+        openModal('Оплата')
+    });
 
-    modal.addEventListener('click', (event) => {
-      const target = event.target;
-      if (target.classList.contains('modal__close')){
-        modal.classList.remove('open');
-      }
-    })
+    cardDetailsButtonDelivery.addEventListener('click', () => {
+        openModal('Доставка и оплата')
+    });
 
-  }
+    modal.addEventListener('click', closeModal);
+
+    document.body.addEventListener('keydown', closeModal);
+};
 
 
 
