@@ -1,15 +1,50 @@
 document.addEventListener('DOMContentLoaded', () => {
-  
-  const tabs = () => {
-   
-    const cardDetailChangeElems = document.querySelectorAll('.card-detail__change');
-    const cardDetailsTitleElem  = document.querySelector('.card-details__title');
-    const cardDetailsImageElem  = document.querySelector('.card__image_item');
-    const cardDetailsPriceElem  = document.querySelector('.card-details__price');
-    const descriptionMemory     = document.querySelector('.description__memory');
 
-    const dataPhones = [
-      {
+
+  const getDataXml = (url, callback) => {
+
+    const request = new XMLHttpRequest();
+    request.open('GET', url);
+    request.addEventListener('readystatechange', () => {
+      if (request.readyState !== 4) return;
+      if (request.status === 200) {
+        const response = JSON.parse(request.response);
+        callback(response)
+      } else {
+        console.error(new Error('Ошибка: ' + request.statusText));
+      }
+    });
+
+    request.send();
+  };
+
+
+  // const getDataFetch = (url, callback) => {
+
+  //   fetch(url)
+  //   .then((response) => {
+  //     if (response.ok){
+  //       return response.json()
+  //     }
+  //     throw new Error(response.statusText)
+  //   })
+  //   .then(callback)
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
+  
+  // };
+
+
+  const tabs = () => {
+
+    const cardDetailChangeElems = document.querySelectorAll('.card-detail__change');
+    const cardDetailsTitleElem = document.querySelector('.card-details__title');
+    const cardDetailsImageElem = document.querySelector('.card__image_item');
+    const cardDetailsPriceElem = document.querySelector('.card-details__price');
+    const descriptionMemory = document.querySelector('.description__memory');
+
+    const dataPhones = [{
         name: 'Смартфон Apple iPhone 12 Pro 64GB Graphite',
         img: 'img/iPhone-graphite.png',
         price: '95990',
@@ -33,35 +68,35 @@ document.addEventListener('DOMContentLoaded', () => {
       cardDetailChangeElems.forEach(btn => btn.classList.remove('active'))
     }
 
-    cardDetailChangeElems.forEach( (btn, i) => {
+    cardDetailChangeElems.forEach((btn, i) => {
       btn.addEventListener('click', () => {
         if (!btn.classList.contains('active')) {
           deactive();
-          
+
           btn.classList.add('active');
           cardDetailsTitleElem.textContent = dataPhones[i].name;
           cardDetailsImageElem.src = dataPhones[i].img;
-          cardDetailsPriceElem.textContent = dataPhones[i].price+'₽';
+          cardDetailsPriceElem.textContent = dataPhones[i].price + '₽';
           descriptionMemory.textContent = `Встроенная память (ROM) ${dataPhones[i].memoryRom} ГБ`
         }
-      } )
-    } )
-    
+      })
+    })
+
 
   }
-  
+
 
   const accordeon = () => {
-    
+
     const characteristicsListElem = document.querySelector('.characteristics__list');
-    const characteristicsItemElems  = document.querySelectorAll('.characteristics__item');
+    const characteristicsItemElems = document.querySelectorAll('.characteristics__item');
 
     characteristicsItemElems.forEach((elem) => {
       if (elem.children[1].classList.contains('active')) {
         elem.children[1].style.height = elem.children[1].scrollHeight + 'px';
       }
     })
-    
+
     const open = (button, dropDown) => {
       closeAllDrops(button, dropDown);
       dropDown.style.height = dropDown.scrollHeight + 'px';
@@ -71,8 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const close = (button, dropDown) => {
       button.classList.remove('active');
-        dropDown.classList.remove('active');
-        dropDown.style.height = '';
+      dropDown.classList.remove('active');
+      dropDown.style.height = '';
     };
 
     const closeAllDrops = (button, dropDown) => {
@@ -97,9 +132,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   modal = () => {
     const cardDetailsButtonBuy = document.querySelector('.card-details__button_buy'),
-    cardDetailsButtonDelivery = document.querySelector('.card-details__button_delivery'),
-    modal = document.querySelector('.modal'),
-    modalSubtitle = document.querySelector('.modal__subtitle');
+      cardDetailsButtonDelivery = document.querySelector('.card-details__button_delivery'),
+      modal = document.querySelector('.modal'),
+      modalSubtitle = document.querySelector('.modal__subtitle');
 
 
     // console.log(cardDetailsTitle);
@@ -110,31 +145,59 @@ document.addEventListener('DOMContentLoaded', () => {
         modalSubtitle.textContent = text;
         modalTitle.textContent = cardDetailsTitle;
         modal.classList.add('open');
-    },
-    closeModal = e => {
+      },
+      closeModal = e => {
         const target = e.target;
 
         if (target === modal || target.classList.contains('modal__close') || e.code === 'Escape') {
-            modal.classList.remove('open');
+          modal.classList.remove('open');
         }
-    }
+      }
 
     cardDetailsButtonBuy.addEventListener('click', () => {
-        openModal('Оплата')
+      openModal('Оплата')
     });
 
     cardDetailsButtonDelivery.addEventListener('click', () => {
-        openModal('Доставка и оплата')
+      openModal('Доставка и оплата')
     });
 
     modal.addEventListener('click', closeModal);
 
     document.body.addEventListener('keydown', closeModal);
-};
+  };
 
 
+  const renderCrossSell = () => {
+    
+    const crossSellList = document.querySelector('.cross-sell__list');
+    const createCrossSellItem = (good) => {
+      const liItem = document.createElement('li');
+      liItem.innerHTML = `
+      <article class="cross-sell__item">
+							<img class="cross-sell__image" src="${good.photo}" alt="${good.name}">
+							<h3 class="cross-sell__title">${good.name}</h3>
+							<p class="cross-sell__price">${good.price}₽</p>
+							<button type="button" class="button button_buy cross-sell__button">Купить</button>
+						</article>
+      `;
+      return liItem;
+    }
+
+    const createCrossSellList = (goods) => {
+      goods.forEach(item => {
+        crossSellList.append(createCrossSellItem(item))
+      })
+    };
+  
+    getDataXml('cross-sell-dbase/dbase.json', createCrossSellList);
+
+    // getDataFetch('cross-sell-dbase/dbase.json', createCrossSellList);
+  }
 
   tabs();
   accordeon();
   modal();
+  renderCrossSell();
+
 });
