@@ -171,6 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const renderCrossSell = () => {
     
     const crossSellList = document.querySelector('.cross-sell__list');
+    const crossSellMoreBtn = document.querySelector('.cross_sell_more');
+    let allGoods = [];
 
     const shuffle = arr => arr.sort(() => Math.random() - 0.5);
 
@@ -187,13 +189,27 @@ document.addEventListener('DOMContentLoaded', () => {
       return liItem;
     }
 
-    const createCrossSellList = (goods) => {
-      const shuffleGoods = shuffle(goods);
-      goods.forEach(item => {
+    const render = arr => {
+      arr.forEach(item => {
         crossSellList.append(createCrossSellItem(item))
       })
+    }
+
+    const createCrossSellList = (goods) => {
+      allGoods.push(...shuffle(goods))
+      // const shuffleGoods = shuffle(goods);
+      let fourItems = allGoods.splice(0, 4);
+
+      render(fourItems);
+
+
     };
   
+    crossSellMoreBtn.addEventListener('click', () => {
+      render(allGoods);
+      crossSellMoreBtn.remove();
+    })
+
     getDataXml('cross-sell-dbase/dbase.json', createCrossSellList);
 
     // getDataFetch('cross-sell-dbase/dbase.json', createCrossSellList);
