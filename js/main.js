@@ -155,11 +155,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
     cardDetailsButtonBuy.addEventListener('click', () => {
-      openModal('Оплата')
+      openModal('Payment')
     });
 
     cardDetailsButtonDelivery.addEventListener('click', () => {
-      openModal('Доставка и оплата')
+      openModal('Shipping and payment')
     });
 
     modal.addEventListener('click', closeModal);
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
 							<img class="cross-sell__image" src="${good.photo}" alt="${good.name}">
 							<h3 class="cross-sell__title">${good.name}</h3>
 							<p class="cross-sell__price">${good.price}₽</p>
-							<button type="button" class="button button_buy cross-sell__button">Купить</button>
+							<button type="button" class="button button_buy cross-sell__button">Buy</button>
 						</article>
       `;
       return liItem;
