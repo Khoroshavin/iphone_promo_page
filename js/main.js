@@ -45,19 +45,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const descriptionMemory = document.querySelector('.description__memory');
 
     const dataPhones = [{
-        name: 'Смартфон Apple iPhone 12 Pro 64GB Graphite',
+        name: 'Smartphone Apple iPhone 12 Pro 64GB Graphite',
         img: 'img/iPhone-graphite.png',
         price: '95990',
         memoryRom: '64',
       },
       {
-        name: 'Смартфон Apple iPhone 12 Pro 128GB Silver',
+        name: 'Smartphone Apple iPhone 12 Pro 128GB Silver',
         img: 'img/iPhone-silver.png',
         price: '97990',
         memoryRom: '128',
       },
       {
-        name: 'Смартфон Apple iPhone 12 Pro 256GB Pacific Blue',
+        name: 'Smartphone Apple iPhone 12 Pro 256GB Pacific Blue',
         img: 'img/iPhone-blue.png',
         price: '99990',
         memoryRom: '256',
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
           cardDetailsTitleElem.textContent = dataPhones[i].name;
           cardDetailsImageElem.src = dataPhones[i].img;
           cardDetailsPriceElem.textContent = dataPhones[i].price + '₽';
-          descriptionMemory.textContent = `Встроенная память (ROM) ${dataPhones[i].memoryRom} ГБ`
+          descriptionMemory.textContent = `Built-in memory (ROM) ${dataPhones[i].memoryRom} GB`
         }
       })
     })
