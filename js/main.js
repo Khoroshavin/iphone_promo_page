@@ -171,6 +171,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const renderCrossSell = () => {
     
     const crossSellList = document.querySelector('.cross-sell__list');
+
+    const shuffle = arr => arr.sort(() => Math.random() - 0.5);
+
     const createCrossSellItem = (good) => {
       const liItem = document.createElement('li');
       liItem.innerHTML = `
@@ -185,6 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const createCrossSellList = (goods) => {
+      const shuffleGoods = shuffle(goods);
       goods.forEach(item => {
         crossSellList.append(createCrossSellItem(item))
       })
@@ -199,5 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
   accordeon();
   modal();
   renderCrossSell();
+  amenu('.header__menu', '.header-menu__list', '.header-menu__item', '.header-menu__burger');
 
 });
